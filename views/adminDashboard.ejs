@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LibrarAI Core</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-200 font-sans min-h-screen flex">
+
+    <aside class="w-64 bg-gray-950 flex flex-col border-r border-gray-800">
+        <div class="p-6 border-b border-gray-800">
+            <a href="/" class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                <span class="text-indigo-500">⚡</span> LibrarAI Admin
+            </a>
+        </div>
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="/admin" class="flex items-center gap-3 bg-indigo-600/10 text-indigo-400 px-4 py-3 rounded-lg font-bold border border-indigo-600/20">
+                Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 text-gray-400 hover:text-gray-100 hover:bg-gray-800 px-4 py-3 rounded-lg font-semibold transition">
+                User Management
+            </a>
+            <a href="#" class="flex items-center gap-3 text-gray-400 hover:text-gray-100 hover:bg-gray-800 px-4 py-3 rounded-lg font-semibold transition">
+                Book Inventory
+            </a>
+        </nav>
+        <div class="p-6 border-t border-gray-800 text-xs text-gray-500 font-mono">
+            System Status: <span class="text-green-400">Online</span><br>
+            Version: 1.0.4-rc
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto p-8 w-full">
+        <header class="mb-10 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-black text-white mb-1">System Metrics Overview</h1>
+                <p class="text-gray-400 font-medium text-sm">Real-time database insights and AI model health.</p>
+            </div>
+            
+            <button id="retrain-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-lg font-bold shadow-lg transition flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                Retrain AI Model
+            </button>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md">
+                <p class="text-sm text-gray-400 font-bold mb-2 uppercase tracking-wider">Total Users</p>
+                <p class="text-4xl font-black text-white"><%= stats.users %></p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md">
+                <p class="text-sm text-gray-400 font-bold mb-2 uppercase tracking-wider">Indexed Books</p>
+                <p class="text-4xl font-black text-white"><%= stats.books %></p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md">
+                <p class="text-sm text-gray-400 font-bold mb-2 uppercase tracking-wider">Interactions Tracked</p>
+                <p class="text-4xl font-black text-indigo-400"><%= stats.interactions %></p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-md relative overflow-hidden">
+                <div class="absolute right-0 top-0 h-full w-2 bg-green-500"></div>
+                <p class="text-sm text-gray-400 font-bold mb-2 uppercase tracking-wider">AI Health Score</p>
+                <p class="text-4xl font-black text-green-400"><%= stats.engagementRate %><span class="text-xl text-gray-500">%</span></p>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-xl border border-gray-700 shadow-md overflow-hidden">
+            <div class="p-6 border-b border-gray-700">
+                <h2 class="text-xl font-bold text-white">Recent Registrations</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-900 text-gray-400 text-sm uppercase tracking-wider">
+                            <th class="p-4 font-bold">Username</th>
+                            <th class="p-4 font-bold">Email</th>
+                            <th class="p-4 font-bold">Role</th>
+                            <th class="p-4 font-bold">Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-700">
+                        <% if(recentUsers && recentUsers.length > 0) { %>
+                            <% recentUsers.forEach(user => { %>
+                                <tr class="hover:bg-gray-750 transition">
+                                    <td class="p-4 font-medium text-white"><%= user.username %></td>
+                                    <td class="p-4 text-gray-400"><%= user.email %></td>
+                                    <td class="p-4">
+                                        <span class="px-3 py-1 rounded-full text-xs font-bold <%= user.role === 'admin' ? 'bg-red-500/10 text-red-400' : 'bg-indigo-500/10 text-indigo-400' %>">
+                                            <%= user.role %>
+                                        </span>
+                                    </td>
+                                    <td class="p-4 text-gray-400"><%= new Date(user.createdAt).toLocaleDateString() %></td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="4" class="p-8 text-center text-gray-500 font-medium">No users found.</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        document.getElementById('retrain-btn').addEventListener('click', async (e) => {
+            const btn = e.currentTarget;
+            const originalContent = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = `<div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div> Training...`;
+            
+            try {
+                const response = await fetch('/api/admin/retrain-model', { method: 'POST' });
+                const data = await response.json();
+                
+                if(data.success) {
+                    btn.innerHTML = `✅ Model Updated`;
+                    btn.classList.replace('bg-indigo-600', 'bg-green-600');
+                    btn.classList.replace('hover:bg-indigo-500', 'hover:bg-green-500');
+                }
+            } catch (err) {
+                btn.innerHTML = `❌ Failed`;
+                btn.classList.replace('bg-indigo-600', 'bg-red-600');
+            }
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+                btn.className = 'bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-lg font-bold shadow-lg transition flex items-center gap-2';
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
