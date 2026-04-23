@@ -1,37 +1,44 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 
-const requireAuth = async (req, res, next) => {
-    const token = req.cookies ? req.cookies.jwt : null;
-    
-    if (!token) {
-        return res.redirect('/login');
-    }
+// 👤 Standard User Check (Protects regular user routes)
+const requireAuth = (req, res, next) => {
+    const token = req.cookies.jwt;
 
-    try {
-        // In production, use process.env.JWT_SECRET instead of a hardcoded string
-        const decoded = jwt.verify(token, 'librarAI_super_secret_key_2026'); 
-        const user = await User.findById(decoded.id);
-        
-        if (!user) {
-            return res.redirect('/login');
-        }
-        
-        req.user = user;
-        res.locals.user = user; // Makes user data globally available in EJS templates
-        next();
-    } catch (error) {
-        console.error('JWT Verification Error:', error.message);
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+            if (err) {
+                res.redirect('/login');
+            } else {
+                next();
+            }
+        });
+    } else {
         res.redirect('/login');
     }
 };
 
+// 👑 Admin-Only Check (Protects the /admin route)
 const requireAdmin = (req, res, next) => {
-    if (req.user && req.user.role === 'admin') {
-        next();
+    const token = req.cookies.jwt;
+
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+            if (err || decodedToken.role !== 'admin') {
+                // If they have a valid token but ARE NOT an admin, send them to the homepage
+                res.redirect('/');
+            } else {
+                // They are the admin! Let them through to the dashboard
+                next();
+            }
+        });
     } else {
-        res.status(403).render('404', { message: 'Access Denied: Administrator privileges required.' });
+        // No token at all, send to login
+        res.redirect('/login');
     }
 };
 
-module.exports = { requireAuth, requireAdmin };
+// 👇 Make sure BOTH are exported so your route files can see them!
+module.exports = { 
+    requireAuth, 
+    requireAdmin 
+};
