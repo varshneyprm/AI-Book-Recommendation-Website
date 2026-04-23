@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
         });
 
         await newUser.save();
-        
+
         res.status(201).json({ success: true, message: 'Account created! AI model initialized.' });
     } catch (error) {
         console.error('Registration Error:', error);
@@ -48,11 +48,11 @@ const loginUser = async (req, res) => {
 
         // 👑 1. ADMIN CHECK: Look at the .env file first
         if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-            
+
             // Generate an Admin Token
             const token = jwt.sign(
-                { email: email, role: 'admin' }, 
-                process.env.JWT_SECRET, 
+                { email: email, role: 'admin' },
+                process.env.JWT_SECRET,
                 { expiresIn: '1d' }
             );
 
@@ -74,8 +74,8 @@ const loginUser = async (req, res) => {
 
         // Generate a Regular User Token
         const token = jwt.sign(
-            { id: user._id, role: 'user' }, 
-            process.env.JWT_SECRET, 
+            { id: user._id, role: 'user' },
+            process.env.JWT_SECRET,
             { expiresIn: '1d' }
         );
 

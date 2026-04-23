@@ -16,7 +16,7 @@ const trackUserInteraction = async (req, res) => {
             'wishlist': 3,
             'currently_reading': 4,
             'completed': 5,
-            'rating': rating ? rating : 1 
+            'rating': rating ? rating : 1
         };
 
         const weight = weightMap[interactionType] || 1;
@@ -24,7 +24,7 @@ const trackUserInteraction = async (req, res) => {
         // Upsert the interaction. If they view it multiple times, we just increase the weight.
         await Interaction.findOneAndUpdate(
             { userId, bookId, interactionType },
-            { 
+            {
                 $inc: { weight: weight },
                 $set: { rating: rating } // Update rating if it's a rating interaction
             },

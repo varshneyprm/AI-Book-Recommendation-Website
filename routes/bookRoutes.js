@@ -22,9 +22,9 @@ router.post('/api/ai/recommend', async (req, res) => {
             res.json({
                 success: true,
                 message: `Simulated AI processing for prompt: "${prompt}"`,
-                data: [] 
+                data: []
             });
-        }, 1500); 
+        }, 1500);
     } catch (error) {
         res.status(500).json({ success: false, message: 'AI Engine Error' });
     }

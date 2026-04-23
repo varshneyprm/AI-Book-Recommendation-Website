@@ -38,7 +38,7 @@ const requireAdmin = (req, res, next) => {
 };
 
 // 👇 Make sure BOTH are exported so your route files can see them!
-module.exports = { 
-    requireAuth, 
-    requireAdmin 
+module.exports = {
+    requireAuth,
+    requireAdmin
 };

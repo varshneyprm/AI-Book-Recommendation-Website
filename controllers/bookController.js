@@ -13,13 +13,13 @@ const searchAndSaveBooks = async (req, res) => {
 
         // 2. Updated URL including the &key= parameter
         const googleBooksApiUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=12&key=${apiKey}`;
-        
+
         const response = await axios.get(googleBooksApiUrl);
         const items = response.data.items || [];
 
         const savedBooks = await Promise.all(items.map(async (item) => {
             const volumeInfo = item.volumeInfo;
-            
+
             const bookData = {
                 title: volumeInfo.title || 'Unknown Title',
                 authors: volumeInfo.authors || ['Unknown Author'],
@@ -51,7 +51,7 @@ const getBookDetails = async (req, res) => {
     try {
         const { id } = req.params;
         const book = await Book.findById(id);
-        
+
         if (!book) {
             return res.status(404).render('404', { message: 'Book not found in our database.' });
         }
