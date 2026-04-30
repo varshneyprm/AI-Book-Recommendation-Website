@@ -1,0 +1,187 @@
+<!-- views/partials/footer.ejs -->
+<!-- Added mt-24 for excellent top spacing, and bg-gray-800 for the gray background -->
+<footer class="bg-gray-800 text-gray-300 pt-14 pb-8 mt-24 border-t border-gray-700 shadow-inner">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+
+            <!-- Column 1: Brand & Logo (Always Visible) -->
+            <div class="col-span-1 md:col-span-1 flex flex-col mb-6 md:mb-0">
+                <a href="/" class="flex items-center gap-3 mb-4 group">
+                    <!-- Website Logo -->
+                    <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo"
+                        class="h-10 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300 bg-white p-0.5">
+                    <span class="text-3xl font-black text-indigo-400 tracking-tight">
+                        GranthSync
+                    </span>
+                </a>
+                <p class="text-sm text-gray-400 leading-relaxed pr-4">
+                    Discover your next great read using the power of AI. Your personal library and smart recommendation
+                    engine.
+                </p>
+            </div>
+
+            <!-- Column 2: Quick Links (Collapsible on Mobile) -->
+            <div class="border-b border-gray-700 md:border-none pb-4 md:pb-0 footer-section">
+                <button
+                    class="w-full flex justify-between items-center md:cursor-default focus:outline-none group footer-toggle"
+                    aria-expanded="false">
+                    <h4 class="text-white font-bold uppercase tracking-wider text-sm">Explore</h4>
+                    <!-- Mobile Arrow Icon -->
+                    <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 md:hidden arrow-icon"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <ul
+                    class="hidden md:block space-y-3 text-sm font-medium mt-4 footer-menu overflow-hidden transition-all duration-300">
+                    <li><a href="/" class="hover:text-indigo-400 transition-colors flex items-center gap-2"><span
+                                class="text-gray-600">▪</span> Search Books</a></li>
+                    <li><a href="/discovery"
+                            class="hover:text-indigo-400 transition-colors flex items-center gap-2"><span
+                                class="text-gray-600">▪</span> AI Co-Pilot</a></li>
+                    <li><a href="/dashboard"
+                            class="hover:text-indigo-400 transition-colors flex items-center gap-2"><span
+                                class="text-gray-600">▪</span> My Dashboard</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Support & Legal (Collapsible on Mobile) -->
+            <div class="border-b border-gray-700 md:border-none pb-4 md:pb-0 footer-section">
+                <button
+                    class="w-full flex justify-between items-center md:cursor-default focus:outline-none group footer-toggle"
+                    aria-expanded="false">
+                    <h4 class="text-white font-bold uppercase tracking-wider text-sm">Legal & Support</h4>
+                    <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 md:hidden arrow-icon"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <ul
+                    class="hidden md:block space-y-3 text-sm font-medium mt-4 footer-menu overflow-hidden transition-all duration-300">
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors flex items-center gap-2"><span
+                                class="text-gray-600">▪</span> Help / FAQ</a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors flex items-center gap-2"><span
+                                class="text-gray-600">▪</span> Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors flex items-center gap-2"><span
+                                class="text-gray-600">▪</span> Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Engineering Team -->
+            <div class="pt-4 md:pt-0">
+                <h4 class="text-white font-bold mb-5 uppercase tracking-wider text-sm">Developers Team</h4>
+                <ul class="space-y-3">
+
+                    <!-- Param Varshney -->
+                    <li class="flex items-center justify-between group">
+                        <span class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Param
+                            Varshney</span>
+                        <a href="www.linkedin.com/in/varshneyprm" target="_blank" rel="noopener noreferrer"
+                            class="text-gray-500 hover:text-blue-400 transition-transform transform hover:scale-110">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                    </li>
+
+                    <!-- Prashant Sharma -->
+                    <li class="flex items-center justify-between group">
+                        <span
+                            class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Prashant
+                            Sharma</span>
+                        <a href="" target="_blank" rel="noopener noreferrer"
+                            class="text-gray-500 hover:text-blue-400 transition-transform transform hover:scale-110">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                    </li>
+
+                    <!-- Raj Garg -->
+                    <li class="flex items-center justify-between group">
+                        <span class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Raj
+                            Garg</span>
+                        <a href="https://www.linkedin.com/in/raj-garg-aa097a2a6" target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-gray-500 hover:text-blue-400 transition-transform transform hover:scale-110">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                    </li>
+
+                    <!-- Sachin Sharma -->
+                    <li class="flex items-center justify-between group">
+                        <span class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Sachin
+                            Sharma</span>
+                        <a href="https://www.linkedin.com/in/sachin-sharma-1138a6291" target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-gray-500 hover:text-blue-400 transition-transform transform hover:scale-110">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-sm text-gray-400">
+                &copy; <%= new Date().getFullYear() %> GranthSync. All rights reserved.
+            </p>
+            <p class="text-sm text-gray-400 mt-4 md:mt-0 font-medium tracking-wide">
+                Have a good learning ...
+            </p>
+        </div>
+    </div>
+
+    <!-- JavaScript for Mobile Responsiveness (Accordion Menus) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggles = document.querySelectorAll('.footer-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    if (window.innerWidth < 768) {
+                        const menu = toggle.nextElementSibling;
+                        const icon = toggle.querySelector('.arrow-icon');
+                        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+
+                        toggle.setAttribute('aria-expanded', !isExpanded);
+
+                        if (!isExpanded) {
+                            menu.classList.remove('hidden');
+                            icon.classList.add('rotate-180');
+                        } else {
+                            menu.classList.add('hidden');
+                            icon.classList.remove('rotate-180');
+                        }
+                    }
+                });
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) {
+                    document.querySelectorAll('.footer-menu').forEach(menu => menu.classList.remove('hidden'));
+                    document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate-180'));
+                } else {
+                    toggles.forEach(toggle => {
+                        if (toggle.getAttribute('aria-expanded') !== 'true') {
+                            toggle.nextElementSibling.classList.add('hidden');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</footer>

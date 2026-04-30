@@ -11,5 +11,25 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "name": "aibookprojectprm",
+  "version": "1.0.0",
+  "description": "The AI Book Recommendation System (GranthSync) is an intelligent, full-stack web application designed to streamline book discovery and tackle information overload. By moving away from static databases, the system dynamically fetches real-time metadata (titles, authors, cover art, synopses) using the Google Books API.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varshneyprm/AI-Book-Recommendation-Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/varshneyprm/AI-Book-Recommendation-Website/issues"
+  },
+  "homepage": "https://github.com/varshneyprm/AI-Book-Recommendation-Website#readme"
 }

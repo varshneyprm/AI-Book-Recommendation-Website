@@ -9,6 +9,76 @@
     </title>
     <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Wait for the HTML to fully load before running the script
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookId = '<%= book._id %>';
+
+            async function handleInteraction(btnId, type, successText, successClasses) {
+                const btn = document.getElementById(btnId);
+                const originalText = btn.innerHTML;
+
+                btn.disabled = true;
+                btn.innerHTML = "Processing...";
+
+                try {
+                    // Hitting your actual telemetry route
+                    const response = await fetch('/api/telemetry/track', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ bookId: bookId, interactionType: type })
+                    });
+
+                    // Check if the server redirected us to the login page
+                    if (response.redirected && response.url.includes('/login')) {
+                        window.location.href = '/login';
+                        return;
+                    }
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        btn.innerHTML = successText;
+                        btn.className = successClasses;
+                    } else {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        console.error(result.message);
+                    }
+                } catch (err) {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    console.error("Failed to connect to server.", err);
+                }
+            }
+
+            // Safely grab the buttons and attach listeners
+            const readBtn = document.getElementById('btn-read');
+            if (readBtn) {
+                readBtn.addEventListener('click', () => {
+                    handleInteraction(
+                        'btn-read',
+                        'completed', // Tells the backend this book is finished
+                        '✅ Bookmarked', // Matches your screenshot
+                        'bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition transform hover:-translate-y-1'
+                    );
+                });
+            }
+
+            const wishlistBtn = document.getElementById('btn-wishlist');
+            if (wishlistBtn) {
+                wishlistBtn.addEventListener('click', () => {
+                    handleInteraction(
+                        'btn-wishlist',
+                        'wishlist',
+                        '✅ Wishlisted',
+                        'bg-indigo-50 border-2 border-indigo-600 text-indigo-700 px-8 py-4 rounded-xl font-bold shadow-sm transition transform hover:-translate-y-1'
+                    );
+                });
+            }
+        });
+    </script>
+
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
@@ -45,7 +115,7 @@
                 </div>
                 <p class="text-gray-600 text-lg leading-relaxed mb-10"><%= book.description %></p>
                 <div class="mt-auto flex gap-4">
-                   <button id="btn-reading" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition transform hover:-translate-y-1">Currently Reading</button>
+                   <button id="btn-read" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition transform hover:-translate-y-1">Mark As Read</button>
 
                     <button id="btn-wishlist" class="bg-white border-2 border-indigo-100 text-indigo-600 hover:border-indigo-600 px-8 py-4 rounded-xl font-bold shadow-sm transition transform hover:-translate-y-1">Add to Wishlist</button>
                 </div>
@@ -82,6 +152,10 @@
                 <% } %>
             </div>
         </div>
+
+         <%- include(' partials/footer') %>
+         
     </main>
 </body>
+
 </html>

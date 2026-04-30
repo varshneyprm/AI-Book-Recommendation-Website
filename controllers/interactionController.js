@@ -1,4 +1,5 @@
 const Interaction = require('../models/Interaction');
+const User = require('../models/User'); // 1. NEW: Import the User model
 
 const trackUserInteraction = async (req, res) => {
     try {
@@ -31,8 +32,18 @@ const trackUserInteraction = async (req, res) => {
             { upsert: true, new: true }
         );
 
+        // 2. NEW: Actually save the book to the user's profile arrays using $addToSet
+        if (interactionType === 'wishlist') {
+            await User.findByIdAndUpdate(userId, { $addToSet: { wishlist: bookId } });
+        } else if (interactionType === 'currently_reading') {
+            await User.findByIdAndUpdate(userId, { $addToSet: { currentlyReading: bookId } });
+        } else if (interactionType === 'completed') {
+            // Saves to the readingHistory array when "Mark As Read" is clicked
+            await User.findByIdAndUpdate(userId, { $addToSet: { readingHistory: bookId } });
+        }
+
         // Fail silently and successfully for the frontend
-        res.status(200).json({ success: true, message: 'Telemetry logged.' });
+        res.status(200).json({ success: true, message: 'Telemetry logged and profile updated.' });
     } catch (error) {
         console.error('Telemetry Error:', error);
         // We still return 200 to the frontend so we don't break the UI for background tracking errors
