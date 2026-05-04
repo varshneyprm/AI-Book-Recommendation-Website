@@ -5,37 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - GranthSync Core</title>
-    <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.jpg">
+    <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.png">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-900 text-gray-200 font-sans min-h-screen flex">
 
-    <aside class="w-64 bg-gray-950 flex flex-col border-r border-gray-800">
-        <div class="p-6 border-b border-gray-800">
-            <a href="/" class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                <span class="text-indigo-500">⚡</span> GranthSync Admin
-            </a>
-        </div>
-        <nav class="flex-1 p-4 space-y-2">
-            <a href="/admin"
-                class="flex items-center gap-3 bg-indigo-600/10 text-indigo-400 px-4 py-3 rounded-lg font-bold border border-indigo-600/20">
-                Dashboard
-            </a>
-            <a href="#"
-                class="flex items-center gap-3 text-gray-400 hover:text-gray-100 hover:bg-gray-800 px-4 py-3 rounded-lg font-semibold transition">
-                User Management
-            </a>
-            <a href="#"
-                class="flex items-center gap-3 text-gray-400 hover:text-gray-100 hover:bg-gray-800 px-4 py-3 rounded-lg font-semibold transition">
-                Book Inventory
-            </a>
-        </nav>
-        <div class="p-6 border-t border-gray-800 text-xs text-gray-500 font-mono">
-            System Status: <span class="text-green-400">Online</span><br>
-            Version: 1.0.4-rc
-        </div>
-    </aside>
+   <%- include('partials/adminSidebar', { activePage: 'admin' }) %>
 
     <main class="flex-1 overflow-y-auto p-8 w-full">
         <header class="mb-10 flex justify-between items-center">

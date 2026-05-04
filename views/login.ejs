@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - GranthSync</title>
-    <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.jpg">
+    <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.png">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-8">
-        <a href="/" class="text-4xl font-black text-indigo-600 tracking-tight">GranthSync</a>
+      <a href="/" class="flex items-center justify-center gap-3 group">
+    <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo" class="h-12 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
+    <span class="text-4xl font-black text-indigo-600 tracking-tight">GranthSync</span>
+</a>
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
     </div>
 
@@ -74,7 +77,15 @@
 
                 const result = await response.json();
 
-                if (result.success) {
+              if (result.success) {
+                    // Set the UI State so the Header knows we are logged in!
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    // If the backend sends us to the admin page, remember they are an Admin!
+                    if (result.redirectUrl === '/admin') {
+                        localStorage.setItem('isAdmin', 'true');
+                    }
+                    
                     window.location.href = result.redirectUrl;
                 } else {
                     errorMsg.textContent = result.message;

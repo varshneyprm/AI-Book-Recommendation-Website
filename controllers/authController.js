@@ -88,9 +88,18 @@ const loginUser = async (req, res) => {
     }
 };
 
+const logoutUser = (req, res) => {
+    // 1. Clear the secure JWT cookie by replacing it with an empty, instantly-expiring cookie
+    res.cookie('jwt', '', { maxAge: 1 });
+    
+    // 2. Send them back to the login page
+    res.redirect('/login');
+};
+
 module.exports = {
     renderRegister,
     registerUser,
     renderLogin,
-    loginUser // 👈 Now this will work because the function exists above!
+    loginUser,
+    logoutUser
 };

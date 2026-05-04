@@ -1,0 +1,26 @@
+<aside class="w-64 bg-[#0B1120] text-gray-300 min-h-screen border-r border-gray-800 flex flex-col hidden md:flex">
+    <div class="p-6 border-b border-gray-800 flex">
+        <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo"
+            class="h-10 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
+        <h2 class="text-2xl font-black text-white flex items-center gap-2 ">
+            <span class="text-indigo-500"></span> GranthSync Admin Portal
+        </h2>
+    </div>
+    <nav class="flex-1 p-4 space-y-2 mt-4">
+        <a href="/admin"
+            class="block px-4 py-3 rounded-lg hover:bg-[#1e293b] hover:text-white transition <%= activePage === 'admin' ? 'bg-[#1e293b] text-white border-l-4 border-indigo-500' : '' %>">Dashboard</a>
+        <a href="/admin/users"
+            class="block px-4 py-3 rounded-lg hover:bg-[#1e293b] hover:text-white transition <%= activePage === 'admin-users' ? 'bg-[#1e293b] text-white border-l-4 border-indigo-500' : '' %>">User
+            Management</a>
+        <a href="/admin/inventory"
+            class="block px-4 py-3 rounded-lg hover:bg-[#1e293b] hover:text-white transition <%= activePage === 'admin-inventory' ? 'bg-[#1e293b] text-white border-l-4 border-indigo-500' : '' %>">Book
+            Inventory</a>
+    </nav>
+    <div class="p-4 border-t border-gray-800">
+        <a href="/logout"
+            class="block w-full text-center px-4 py-3 bg-red-500/10 text-red-400 font-bold rounded-lg hover:bg-red-500/20 transition border border-red-500/20">Logout</a>
+    </div>
+    <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-[-1] opacity-10">
+        <img src="/images/GranthSyncLogo.png" alt="Watermark" class="w-full max-w-2xl px-10 ">
+    </div>
+</aside>

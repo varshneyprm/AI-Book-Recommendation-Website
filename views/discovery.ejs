@@ -5,41 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Discovery - GranthSync</title>
-    <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.jpg">
+    <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.png">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="/" class="text-3xl font-black text-indigo-600 tracking-tight">GranthSync</a>
-            <nav class="space-x-6">
-                <a href="/" class="text-sm text-gray-600 hover:text-indigo-600 font-semibold transition">Standard
-                    Search</a>
-            </nav>
-        </div>
-    </header>
+    
+    <!-- Dynamic Header Partial -->
+    <%- include('partials/header') %>
 
-    <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full pb-24 md:pb-12">
         <div class="bg-gradient-to-br from-indigo-900 to-purple-900 rounded-3xl p-10 text-white shadow-2xl mb-10">
             <h1 class="text-4xl font-black mb-4 flex items-center gap-3">
-                <svg class="w-10 h-10 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                    </path>
-                </svg>
+                <svg class="w-10 h-10 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                 AI Co-Pilot
             </h1>
-            <p class="text-indigo-200 text-lg mb-8">Describe what you're in the mood for in natural language, or tweak
-                the parameters below to let our neural network find your perfect book.</p>
+            <p class="text-indigo-200 text-lg mb-8">Describe what you're in the mood for in natural language, or tweak the parameters below to let our neural network find your perfect book.</p>
 
             <form id="ai-prompt-form" class="relative">
-                <textarea id="ai-prompt" rows="3"
-                    placeholder="e.g., I want a fast-paced sci-fi thriller with a strong female lead and unexpected plot twists..."
+                <textarea id="ai-prompt" rows="3" placeholder="e.g., I want a fast-paced sci-fi thriller..."
                     class="w-full bg-white/10 border border-white/20 rounded-xl p-5 text-white placeholder-indigo-300 focus:ring-4 focus:ring-purple-500/50 outline-none resize-none transition text-lg backdrop-blur-sm"></textarea>
                 <div class="absolute bottom-4 right-4">
-                    <button type="submit"
-                        class="bg-purple-500 hover:bg-purple-400 text-white px-6 py-2 rounded-lg font-bold shadow-lg transition transform hover:-translate-y-0.5">Generate</button>
+                    <button type="submit" class="bg-purple-500 hover:bg-purple-400 text-white px-6 py-2 rounded-lg font-bold shadow-lg transition transform hover:-translate-y-0.5">Generate</button>
                 </div>
             </form>
         </div>
@@ -48,33 +35,77 @@
             <h3 class="text-xl font-bold text-gray-900 mb-6">Fine-Tune Algorithm Parameters</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <label class="flex justify-between text-sm font-bold text-gray-700 mb-2">
-                        <span>Pacing</span>
-                        <span class="text-indigo-600">Slow Burn ↔ Action Packed</span>
-                    </label>
-                    <input type="range" min="1" max="100" value="50"
-                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    <label class="flex justify-between text-sm font-bold text-gray-700 mb-2"><span>Pacing</span><span class="text-indigo-600">Slow Burn ↔ Action Packed</span></label>
+                    <input type="range" min="1" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                 </div>
                 <div>
-                    <label class="flex justify-between text-sm font-bold text-gray-700 mb-2">
-                        <span>Mood</span>
-                        <span class="text-indigo-600">Dark/Gritty ↔ Light/Cozy</span>
-                    </label>
-                    <input type="range" min="1" max="100" value="50"
-                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                    <label class="flex justify-between text-sm font-bold text-gray-700 mb-2"><span>Mood</span><span class="text-indigo-600">Dark/Gritty ↔ Light/Cozy</span></label>
+                    <input type="range" min="1" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                 </div>
             </div>
         </div>
 
         <div id="ai-results" class="hidden">
             <h3 class="text-2xl font-black text-gray-900 mb-6">Neural Network Matches</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="ai-results-grid">
-            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="ai-results-grid"></div>
         </div>
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('ai-prompt-form');
+            const promptInput = document.getElementById('ai-prompt');
+            const resultsContainer = document.getElementById('ai-results');
+            const resultsGrid = document.getElementById('ai-results-grid');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const sliders = document.querySelectorAll('input[type="range"]');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const promptText = promptInput.value.trim();
+                if (!promptText) return;
+
+                const originalBtnText = submitBtn.innerText;
+                submitBtn.innerText = 'Analyzing...';
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                resultsGrid.innerHTML = '';
+                resultsContainer.classList.remove('hidden');
+                
+                resultsGrid.innerHTML = `<div class="col-span-full py-12 text-center flex flex-col items-center justify-center"><svg class="animate-spin h-10 w-10 text-indigo-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="text-gray-500 font-bold animate-pulse">Running neural network analysis...</p></div>`;
+
+                try {
+                    const response = await fetch('/api/discover', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt: promptText, pacing: sliders[0].value, mood: sliders[1].value })
+                    });
+                    const data = await response.json();
+                    resultsGrid.innerHTML = '';
+
+                    if (data.success && data.books && data.books.length > 0) {
+                        data.books.forEach(book => {
+                            const bookHTML = `<a href="/book/${book._id}" class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 overflow-hidden flex flex-col border border-gray-100 relative"><div class="bg-gray-100 p-4 flex justify-center items-center h-56 pt-6"><img src="${book.thumbnail || '/images/default-book.png'}" alt="${book.title}" class="h-full object-cover rounded shadow group-hover:scale-105 transition duration-500"></div><div class="p-5 flex-grow flex flex-col"><h4 class="font-bold text-gray-900 text-base mb-1 line-clamp-2">${book.title}</h4><p class="text-sm text-gray-500 font-medium mb-2 line-clamp-1">${book.authors && book.authors.length > 0 ? book.authors[0] : 'Unknown Author'}</p></div></a>`;
+                            resultsGrid.insertAdjacentHTML('beforeend', bookHTML);
+                        });
+                    } else {
+                        resultsGrid.innerHTML = `<div class="col-span-full bg-indigo-50 rounded-xl p-8 text-center border-2 border-dashed border-indigo-200"><p class="text-indigo-700 font-bold text-lg">No perfect matches found.</p></div>`;
+                    }
+                } catch (error) {
+                    resultsGrid.innerHTML = `<div class="col-span-full bg-red-50 text-red-600 rounded-xl p-8 text-center border border-red-200"><p class="font-bold">Error connecting to the AI Co-Pilot.</p></div>`;
+                } finally {
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                }
+            });
+        });
+    </script>
+    
     <%- include('partials/footer') %>
 
-</body>
+    <!-- Mobile Nav Partial (Safe Include) -->
+    <%- include('partials/mobileNav', { activePage: typeof activePage !== 'undefined' ? activePage : 'discovery' }) %>
 
+</body>
 </html>

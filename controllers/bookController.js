@@ -69,7 +69,51 @@ const getBookDetails = async (req, res) => {
     }
 };
 
+const seedDatabase = async (req, res) => {
+    try {
+        // We will fetch 10 books from each of these 5 categories
+        const searchQueries = ['computer science', 'artificial intelligence', 'science fiction', 'startup business', 'fantasy magic'];
+        const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
+        let totalSaved = 0;
+
+        for (const query of searchQueries) {
+            const googleBooksApiUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10&key=${apiKey}`;
+            const response = await axios.get(googleBooksApiUrl);
+            const items = response.data.items || [];
+
+            await Promise.all(items.map(async (item) => {
+                const volumeInfo = item.volumeInfo;
+                const bookData = {
+                    title: volumeInfo.title || 'Unknown Title',
+                    authors: volumeInfo.authors || ['Unknown Author'],
+                    description: volumeInfo.description || 'No synopsis available.',
+                    thumbnail: volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail : 'https://via.placeholder.com/128x192.png?text=No+Cover',
+                    categories: volumeInfo.categories || [],
+                    pageCount: volumeInfo.pageCount || 0,
+                    publishedDate: volumeInfo.publishedDate || 'Unknown',
+                    averageRating: volumeInfo.averageRating || 0,
+                    ratingsCount: volumeInfo.ratingsCount || 0
+                };
+
+                // Save to database
+                await Book.findOneAndUpdate(
+                    { googleId: item.id },
+                    { $set: bookData },
+                    { upsert: true, new: true }
+                );
+                totalSaved++;
+            }));
+        }
+
+        res.status(200).send(`<h1>✅ Database Seeded Successfully!</h1><p>Added ${totalSaved} books to MongoDB.</p><a href="/">Go back home</a>`);
+    } catch (error) {
+        console.error('Seeding Error:', error);
+        res.status(500).send('Error seeding database.');
+    }
+};
+
 module.exports = {
     searchAndSaveBooks,
-    getBookDetails
+    getBookDetails,
+    seedDatabase
 };
