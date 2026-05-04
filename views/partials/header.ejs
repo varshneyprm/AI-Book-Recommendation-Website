@@ -1,87 +1,104 @@
+<!-- 
+    Global Header Partial
+    Purpose: Provides the primary top-level navigation.
+    Behavior: Relies on client-side JavaScript to determine the user's authentication status and roles, modifying the visible links accordingly without requiring a full page reload from the server.
+-->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
-            
-            <!-- 1. LEFT: Brand & Logo -->
+
+            <!-- Branding and Logo Section -->
             <div class="flex-shrink-0 flex items-center">
                 <a href="/" class="flex items-center gap-3 group">
-                    <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo" class="h-10 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
+                    <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo"
+                        class="h-10 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
                     <span class="text-3xl font-black text-indigo-600 tracking-tight">GranthSync</span>
                 </a>
             </div>
 
-            <!-- 2. CENTER: Primary Navigation -->
+            <!-- 
+                Primary Feature Navigation
+                The AI Co-Pilot is hidden by default and only revealed if the user is authenticated, protecting the AI API quota from public abuse.
+            -->
             <nav class="hidden md:flex space-x-8 absolute left-1/2 transform -translate-x-1/2">
-                <a href="/" class="inline-flex items-center px-1 pt-1 border-b-2 transition-colors duration-200 <%= typeof activePage !== 'undefined' && activePage === 'home' ? 'border-indigo-600 text-gray-900 font-bold' : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 font-medium' %>">
+                <a href="/"
+                    class="inline-flex items-center px-1 pt-1 border-b-2 transition-colors duration-200 <%= typeof activePage !== 'undefined' && activePage === 'home' ? 'border-indigo-600 text-gray-900 font-bold' : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 font-medium' %>">
                     Standard Search
                 </a>
-                <a href="/discovery" id="nav-copilot" class="hidden inline-flex items-center px-1 pt-1 border-b-2 transition-colors duration-200 <%= typeof activePage !== 'undefined' && activePage === 'discovery' ? 'border-indigo-600 text-gray-900 font-bold' : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 font-medium' %>">
+                <a href="/discovery" id="nav-copilot"
+                    class="hidden inline-flex items-center px-1 pt-1 border-b-2 transition-colors duration-200 <%= typeof activePage !== 'undefined' && activePage === 'discovery' ? 'border-indigo-600 text-gray-900 font-bold' : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 font-medium' %>">
                     AI Co-Pilot
                 </a>
             </nav>
 
-            <!-- 3. RIGHT: User Controls -->
+            <!-- Authentication and Profile Controls -->
             <div class="hidden md:flex items-center space-x-4">
-                
-                <!-- If Logged In -->
+
+                <!-- Elements rendered only for authenticated sessions -->
                 <div id="nav-logged-in" class="hidden items-center space-x-4">
-                    <!-- Admin Portal (Hidden by default) -->
-                    <a href="/admin" id="nav-admin" class="hidden text-xs font-black uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition transform hover:-translate-y-0.5">
+
+                    <!-- Secure admin portal link, revealed dynamically via script below -->
+                    <a href="/admin" id="nav-admin"
+                        class="hidden text-xs font-black uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition transform hover:-translate-y-0.5">
                         Admin Portal
                     </a>
-                    
-                    <a href="/dashboard" class="text-sm font-bold text-gray-600 hover:text-indigo-600 transition flex items-center gap-2">
+
+                    <a href="/dashboard"
+                        class="text-sm font-bold text-gray-600 hover:text-indigo-600 transition flex items-center gap-2">
                         My Dashboard
                     </a>
-                    
-                    <div class="h-6 w-px bg-gray-200"></div> <!-- Elegant Vertical Divider -->
-                    
-                    <!-- Notice the onclick event here! It clears our UI state when they log out -->
-                    <a href="/logout" onclick="localStorage.clear()" class="text-sm font-bold text-red-500 hover:text-red-700 transition">
+
+                    <div class="h-6 w-px bg-gray-200"></div>
+
+                    <!-- Flushes the local storage client-side flags when the user triggers the backend logout route -->
+                    <a href="/logout" onclick="localStorage.clear()"
+                        class="text-sm font-bold text-red-500 hover:text-red-700 transition">
                         Log Out
                     </a>
                 </div>
 
-                <!-- If Logged Out -->
+                <!-- Elements rendered for anonymous public visitors -->
                 <div id="nav-logged-out" class="hidden items-center space-x-4">
-                    <a href="/login" class="text-sm font-bold text-gray-600 hover:text-indigo-600 transition">Sign In</a>
-                    <a href="/register" class="text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl shadow-md transition transform hover:-translate-y-0.5">Create Account</a>
+                    <a href="/login" class="text-sm font-bold text-gray-600 hover:text-indigo-600 transition">Sign
+                        In</a>
+                    <a href="/register"
+                        class="text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl shadow-md transition transform hover:-translate-y-0.5">Create
+                        Account</a>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- UI State Management Script -->
+    <!-- 
+        UI State Management Script
+        Reads insensitive boolean flags from localStorage (set during the login process) to manipulate the Document Object Model (DOM).
+        This ensures the UI instantly reflects the user's role without waiting for a server-side EJS compilation cycle.
+    -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Read the harmless UI state from local storage
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
             if (isLoggedIn) {
-                // Show Logged-In Menu
                 document.getElementById('nav-logged-in').classList.remove('hidden');
                 document.getElementById('nav-logged-in').classList.add('flex');
-                
-                // Unhide the AI Co-Pilot feature
+
                 document.getElementById('nav-copilot').classList.remove('hidden');
                 document.getElementById('nav-copilot').classList.add('inline-flex');
-                
-                // Only show the Admin Portal button if they are an admin
+
                 if (isAdmin) {
                     document.getElementById('nav-admin').classList.remove('hidden');
                 }
             } else {
-                // Show Sign In / Create Account Menu
                 document.getElementById('nav-logged-out').classList.remove('hidden');
                 document.getElementById('nav-logged-out').classList.add('flex');
             }
         });
     </script>
 
-    <!-- Background Watermark -->
-<div class="fixed inset-0 flex items-center justify-center pointer-events-none z-[-1] opacity-5">
-    <img src="/images/GranthSyncLogo.png" alt="Watermark" class="w-full max-w-2xl px-10">
-</div>
+    <!-- Global watermark layer for consistent branding aesthetics -->
+    <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-[-1] opacity-5">
+        <img src="/images/GranthSyncLogo.png" alt="Watermark" class="w-full max-w-2xl px-10">
+    </div>
 </header>

@@ -1,17 +1,18 @@
-
+<!-- 
+    Global Footer Partial
+    Purpose: Provides site-wide secondary navigation, legal links, and developer credits.
+    Behavior: Includes a responsive script that transforms columns into collapsible accordions on mobile devices to save screen space.
+-->
 <footer class="bg-gray-800 text-gray-300 pt-14 pb-8 mt-24 border-t border-gray-700 shadow-inner">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
 
-            <!-- Column 1: Brand & Logo (Always Visible) -->
+            <!-- Primary branding and platform mission statement -->
             <div class="col-span-1 md:col-span-1 flex flex-col mb-6 md:mb-0">
                 <a href="/" class="flex items-center gap-3 mb-4 group">
-                    <!-- Website Logo -->
                     <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo"
                         class="h-10 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300 bg-white p-0.5">
-                    <span class="text-3xl font-black text-indigo-400 tracking-tight">
-                        GranthSync
-                    </span>
+                    <span class="text-3xl font-black text-indigo-400 tracking-tight">GranthSync</span>
                 </a>
                 <p class="text-sm text-gray-400 leading-relaxed pr-4">
                     Discover your next great read using the power of AI. Your personal library and smart recommendation
@@ -19,13 +20,13 @@
                 </p>
             </div>
 
-            <!-- Column 2: Quick Links (Collapsible on Mobile) -->
+            <!-- Quick navigation links connected to the core application features -->
             <div class="border-b border-gray-700 md:border-none pb-4 md:pb-0 footer-section">
                 <button
                     class="w-full flex justify-between items-center md:cursor-default focus:outline-none group footer-toggle"
                     aria-expanded="false">
                     <h4 class="text-white font-bold uppercase tracking-wider text-sm">Explore</h4>
-                    <!-- Mobile Arrow Icon -->
+                    <!-- Displays an interactive arrow on mobile devices to indicate collapsibility -->
                     <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300 md:hidden arrow-icon"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -44,7 +45,7 @@
                 </ul>
             </div>
 
-            <!-- Column 3: Support & Legal (Collapsible on Mobile) -->
+            <!-- Standard legal and administrative resource links -->
             <div class="border-b border-gray-700 md:border-none pb-4 md:pb-0 footer-section">
                 <button
                     class="w-full flex justify-between items-center md:cursor-default focus:outline-none group footer-toggle"
@@ -66,12 +67,10 @@
                 </ul>
             </div>
 
-            <!-- Column 4: Engineering Team -->
+            <!-- Identifies the engineering team behind the application -->
             <div class="pt-4 md:pt-0">
                 <h4 class="text-white font-bold mb-5 uppercase tracking-wider text-sm">Developers Team</h4>
                 <ul class="space-y-3">
-
-                    <!-- Param Varshney -->
                     <li class="flex items-center justify-between group">
                         <span class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Param
                             Varshney</span>
@@ -84,8 +83,6 @@
                             </svg>
                         </a>
                     </li>
-
-                    <!-- Prashant Sharma -->
                     <li class="flex items-center justify-between group">
                         <span
                             class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Prashant
@@ -99,8 +96,6 @@
                             </svg>
                         </a>
                     </li>
-
-                    <!-- Raj Garg -->
                     <li class="flex items-center justify-between group">
                         <span class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Raj
                             Garg</span>
@@ -114,8 +109,6 @@
                             </svg>
                         </a>
                     </li>
-
-                    <!-- Sachin Sharma -->
                     <li class="flex items-center justify-between group">
                         <span class="text-sm text-gray-300 font-medium group-hover:text-white transition-colors">Sachin
                             Sharma</span>
@@ -129,7 +122,6 @@
                             </svg>
                         </a>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -144,7 +136,11 @@
         </div>
     </div>
 
-    <!-- JavaScript for Mobile Responsiveness (Accordion Menus) -->
+    <!-- 
+        Mobile Responsiveness Script
+        Handles the accordion logic for the footer menus on devices narrower than 768px.
+        Automatically resets the view to a standard horizontal layout if the device is rotated to landscape or scaled up.
+    -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggles = document.querySelectorAll('.footer-toggle');

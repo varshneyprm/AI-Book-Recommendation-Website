@@ -1,3 +1,8 @@
+<!--
+    Authentication Interface
+    Purpose: Provides the login form for returning users and administrators to access their secure sessions.
+    Connection: Interfaces directly with the authentication controller via an asynchronous frontend script.
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,22 +17,25 @@
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-8">
-      <a href="/" class="flex items-center justify-center gap-3 group">
-    <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo" class="h-12 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
-    <span class="text-4xl font-black text-indigo-600 tracking-tight">GranthSync</span>
-</a>
+        <a href="/" class="flex items-center justify-center gap-3 group">
+            <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo"
+                class="h-12 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
+            <span class="text-4xl font-black text-indigo-600 tracking-tight">GranthSync</span>
+        </a>
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
     </div>
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10 border border-gray-100">
 
+            <!-- Evaluates a server-side flag to display a success banner if the user was redirected here immediately after account creation -->
             <% if (typeof registered !=='undefined' && registered) { %>
                 <div class="bg-green-50 text-green-700 p-4 rounded-lg mb-6 text-sm font-bold border border-green-200">
                     Account created successfully! Please log in to initialize your AI profile.
                 </div>
                 <% } %>
 
+                    <!-- Container reserved for dynamic error messages injected by the client-side authentication script -->
                     <div id="error-message"
                         class="hidden bg-red-50 text-red-600 p-4 rounded-lg mb-6 text-sm font-bold border border-red-100">
                     </div>
@@ -57,18 +65,24 @@
         </div>
     </div>
 
+    <!--
+        Authentication State Manager
+        Purpose: Submits credentials asynchronously, parses the server token, and sets local storage flags to control global UI state before redirecting.
+    -->
     <script>
         document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Prevents standard browser form submission
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const errorMsg = document.getElementById('error-message');
             const submitBtn = document.getElementById('submit-btn');
 
-            submitBtn.disabled = true;
+            submitBtn.disabled = true; // Locks the form to prevent multiple authentication requests
             submitBtn.innerHTML = "Authenticating...";
 
             try {
+                // Transmits the credential payload to the backend verification endpoint
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -77,18 +91,17 @@
 
                 const result = await response.json();
 
-              if (result.success) {
-                    // Set the UI State so the Header knows we are logged in!
-                    localStorage.setItem('isLoggedIn', 'true');
-                    
-                    // If the backend sends us to the admin page, remember they are an Admin!
+                if (result.success) {
+                    localStorage.setItem('isLoggedIn', 'true'); // Writes a boolean flag to local storage allowing the header to update its navigation links
+
+                    // Conditionally applies elevated privileges to the local storage state if the backend routes the user to the admin domain
                     if (result.redirectUrl === '/admin') {
                         localStorage.setItem('isAdmin', 'true');
                     }
-                    
-                    window.location.href = result.redirectUrl;
+
+                    window.location.href = result.redirectUrl; // Executes the programmatic redirect provided by the server
                 } else {
-                    errorMsg.textContent = result.message;
+                    errorMsg.textContent = result.message; // Exposes the backend rejection reason to the user
                     errorMsg.classList.remove('hidden');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = "Sign In";

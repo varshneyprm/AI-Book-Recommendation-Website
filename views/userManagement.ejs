@@ -1,61 +1,96 @@
+<!--
+    Admin User Management View
+    Purpose: Provides administrators with a structured tabular interface to audit registered user accounts and perform destructive lifecycle management actions.
+-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>User Management - GranthSync Admin</title>
+    <link rel="icon" type="image/jpeg" href="/images/GranthSyncLogo.png">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-[#0B1120] text-gray-100 min-h-screen flex">
+
     <%- include('partials/adminSidebar', { activePage: 'admin-users' }) %>
+        <!-- Injects the restricted administrative sidebar component -->
 
-    <main class="flex-grow p-10 overflow-y-auto h-screen">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-black text-white">User Management</h1>
-            <span class="bg-indigo-500/20 text-indigo-300 px-4 py-2 rounded-lg font-bold border border-indigo-500/30">Total Users: <%= users.length %></span>
-        </div>
-        
-        <div class="bg-[#1e293b] rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
-            <table class="w-full text-left border-collapse">
-                <thead class="bg-[#0f172a] text-gray-400 uppercase text-xs tracking-wider">
-                    <tr>
-                        <th class="px-6 py-4 border-b border-gray-700">Username</th>
-                        <th class="px-6 py-4 border-b border-gray-700">Email</th>
-                        <th class="px-6 py-4 border-b border-gray-700">Joined Date</th>
-                        <th class="px-6 py-4 border-b border-gray-700 text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700">
-                    <% if (users.length > 0) { %>
-                        <% users.forEach(user => { %>
-                        <tr class="hover:bg-[#334155] transition" id="user-<%= user._id %>">
-                            <td class="px-6 py-4 font-bold text-indigo-400"><%= user.username %></td>
-                            <td class="px-6 py-4 text-gray-300"><%= user.email %></td>
-                            <td class="px-6 py-4 text-gray-500 text-sm"><%= new Date(user.createdAt).toLocaleDateString() %></td>
-                            <td class="px-6 py-4 text-center">
-                                <button onclick="deleteUser('<%= user._id %>')" class="text-red-400 font-bold hover:text-white bg-red-500/10 hover:bg-red-500 px-4 py-2 rounded-lg transition border border-red-500/20">Remove</button>
-                            </td>
+        <main class="flex-grow p-10 overflow-y-auto h-screen">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-black text-white">User Management</h1>
+                <!-- Dynamically computes array length to output total platform utilization metrics -->
+                <span
+                    class="bg-indigo-500/20 text-indigo-300 px-4 py-2 rounded-lg font-bold border border-indigo-500/30">Total
+                    Users: <%= users.length %></span>
+            </div>
+
+            <div class="bg-[#1e293b] rounded-2xl overflow-hidden border border-gray-700 shadow-2xl">
+                <table class="w-full text-left border-collapse">
+                    <!-- Defines strict column properties for the data matrix -->
+                    <thead class="bg-[#0f172a] text-gray-400 uppercase text-xs tracking-wider">
+                        <tr>
+                            <th class="px-6 py-4 border-b border-gray-700">Username</th>
+                            <th class="px-6 py-4 border-b border-gray-700">Email</th>
+                            <th class="px-6 py-4 border-b border-gray-700">Joined Date</th>
+                            <th class="px-6 py-4 border-b border-gray-700 text-center">Action</th>
                         </tr>
-                        <% }) %>
-                    <% } else { %>
-                        <tr><td colspan="4" class="px-6 py-8 text-center text-gray-500">No users found.</td></tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div>
-    </main>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        <!-- Checks for existing data records to prevent loop execution errors on an empty database -->
+                        <% if (users.length> 0) { %>
+                            <!-- Executes an iterative loop over the user array to generate discrete data rows -->
+                            <% users.forEach(user=> { %>
+                                <tr class="hover:bg-[#334155] transition" id="user-<%= user._id %>">
+                                    <td class="px-6 py-4 font-bold text-indigo-400">
+                                        <%= user.username %>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-300">
+                                        <%= user.email %>
+                                    </td>
+                                    <!-- Normalizes raw database timestamps into human-readable local date formats -->
+                                    <td class="px-6 py-4 text-gray-500 text-sm">
+                                        <%= new Date(user.createdAt).toLocaleDateString() %>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <!-- Attaches the server-side identifier to the client-side execution function -->
+                                        <button onclick="deleteUser('<%= user._id %>')"
+                                            class="text-red-400 font-bold hover:text-white bg-red-500/10 hover:bg-red-500 px-4 py-2 rounded-lg transition border border-red-500/20">Remove</button>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <!-- Provides a logical fallback state for new systems -->
+                                        <tr>
+                                            <td colspan="4" class="px-6 py-8 text-center text-gray-500">No users found.
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
 
-    <script>
-        async function deleteUser(userId) {
-            if (confirm('Are you sure? This will permanently delete the user and their reading history.')) {
-                const res = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
-                const data = await res.json();
-                if (data.success) {
-                    document.getElementById(`user-${userId}`).remove();
-                } else {
-                    alert('Error deleting user.');
+        <!--
+        Destructive Account Deletion Protocol
+        Purpose: Ensures explicit administrator intent before issuing a permanent network delete command to purge the account and interaction records.
+    -->
+        <script>
+            async function deleteUser(userId) {
+                // Implements a strict browser confirmation dialog to prevent accidental data loss
+                if (confirm('Are you sure? This will permanently delete the user and their reading history.')) {
+                    const res = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
+                    const data = await res.json(); // Validates execution state
+
+                    if (data.success) {
+                        document.getElementById(`user-${userId}`).remove(); // Isolates the target row and destroys it within the DOM instantly
+                    } else {
+                        alert('Error deleting user.');
+                    }
                 }
             }
-        }
-    </script>
+        </script>
 </body>
+
 </html>

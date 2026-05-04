@@ -1,8 +1,12 @@
-const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/userController');
+/*
+    User Profile Routing Module
+    Purpose: Defines the pathways for users to access their personal data and targeted recommendations.
+    Connection: Connects the browser URL to the userController responsible for aggregating profile metrics.
+*/
+const express = require('express'); // Imports the Express framework
+const router = express.Router(); // Initializes the routing instance
+const userController = require('../controllers/userController'); // Imports the data aggregation logic for the profile hub
 
-// In production, you would add an auth middleware here: router.get('/dashboard', requireAuth, userController.getDashboard)
-router.get('/dashboard', userController.getDashboard);
+router.get('/dashboard', userController.getDashboard); // Serves the personalized hub interface
 
-module.exports = router;
+module.exports = router; // Exports the dashboard route

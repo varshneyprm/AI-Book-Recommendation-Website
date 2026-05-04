@@ -90,25 +90,28 @@ npm install
 
 PORT=3000
 
-MONGODB_URI=mongodb://127.0.0.1:27017/librarAI
+MONGODB_URI=......
 
 JWT_SECRET=my_super_secret_btech_project_key_2026
 
-GOOGLE_BOOKS_API_KEY= AIzaSyAYQQr4Sl9QNoOVYwOH4UJljRNylnaqTwI
+GOOGLE_BOOKS_API_KEY=.................
 
 ADMIN_EMAIL=varshneyprm@gmail.com
 
-ADMIN_PASSWORD=585858
+ADMIN_PASSWORD=.........
 
 ### Step 4: Start the Server
 
 You can run the application in two ways:
 
-Option A: Standard Execution (Production Mode)
+#### Option A: Standard Execution (Production Mode)
+
 Starts the Node.js server normally. If you make changes to the code, you must manually restart the server.
 
 node server.js
-Option B: Development Execution (Hot-Reloading)
+
+#### Option B: Development Execution (Hot-Reloading)
+
 Uses nodemon to monitor your project directory and automatically restart the server whenever code changes are saved.
 If you don't have nodemon installed globally, install it first:
 
@@ -120,18 +123,6 @@ nodemon server.js
 ### Step 5: Access the Application
 
 Once the terminal displays Server running on http://localhost:3000 and Connected to MongoDB, open your web browser and navigate to http://localhost:3000.
-
-## Development Team
-
-This software was engineered and designed by the following development team:
-
-Param Varshney — Frontend & UI/UX Engineering
-
-Prashant Sharma — Backend API & Integrations
-
-Raj Garg — Database Administration & Data Modeling
-
-Sachin Sharma — Security & Authentication Architecture
 
 Academic Institution: Aligarh College of Engineering and Technology, Aligarh
 

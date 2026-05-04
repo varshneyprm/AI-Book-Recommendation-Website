@@ -1,3 +1,7 @@
+<!--
+    Registration & Cold-Start Interface
+    Purpose: Guides new users through a multi-step onboarding process, collecting authentication credentials and baseline preferences to bootstrap the recommendation engine.
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +16,11 @@
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-8">
-       <a href="/" class="flex items-center justify-center gap-3 group">
-    <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo" class="h-12 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
-    <span class="text-4xl font-black text-indigo-600 tracking-tight">GranthSync</span>
-</a>
+        <a href="/" class="flex items-center justify-center gap-3 group">
+            <img src="/images/GranthSyncLogo.png" alt="GranthSync Logo"
+                class="h-12 w-auto rounded shadow-sm group-hover:scale-105 transition-transform duration-300">
+            <span class="text-4xl font-black text-indigo-600 tracking-tight">GranthSync</span>
+        </a>
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Create your account</h2>
     </div>
 
@@ -27,6 +32,8 @@
                 class="hidden bg-red-50 text-red-600 p-4 rounded-lg mb-6 text-sm font-bold border border-red-100"></div>
 
             <form id="registration-form" class="space-y-6">
+
+                <!-- Initial phase capturing standard identity metrics -->
                 <div id="step-1" class="transition-all duration-500">
                     <h3 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Step 1: Account Details</h3>
                     <div class="space-y-4">
@@ -52,14 +59,17 @@
                     </button>
                 </div>
 
+                <!-- Secondary phase capturing behavioral parameters for the neural network -->
                 <div id="step-2" class="hidden transition-all duration-500">
                     <h3 class="text-lg font-bold text-indigo-600 mb-2 border-b pb-2">Step 2: Train Your AI</h3>
                     <p class="text-sm text-gray-500 mb-6 font-medium">Select at least 3 genres you enjoy so our neural
                         network can initialize your recommendations.</p>
 
+                    <!-- Container populated dynamically by Javascript to render selectable genre tags -->
                     <div id="genre-container" class="flex flex-wrap gap-3 mb-8">
                     </div>
 
+                    <!-- Hidden input field used to compile the final array of selected genres for submission -->
                     <input type="hidden" id="selected-genres" name="genres">
 
                     <div class="flex gap-4">
@@ -77,6 +87,10 @@
         </div>
     </div>
 
+    <!--
+        Onboarding Process Manager
+        Purpose: Handles view transitions between steps, tracks user genre selections in a distinct data set, and communicates with the backend registration API.
+    -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const step1 = document.getElementById('step-1');
@@ -89,9 +103,11 @@
             const errorMsg = document.getElementById('error-message');
             const form = document.getElementById('registration-form');
 
+            // Predefined taxonomy of categories used to calibrate the machine learning algorithm
             const genres = ['Science Fiction', 'Fantasy', 'Thriller', 'Romance', 'Mystery', 'Horror', 'Historical Fiction', 'Biography', 'Self-Help', 'Philosophy', 'Business', 'Poetry'];
-            let selected = new Set();
+            let selected = new Set(); // Utilizes a Set object to guarantee unique values and prevent duplicate selections
 
+            // Dynamically constructs the interactive genre buttons
             genres.forEach(genre => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
@@ -99,6 +115,7 @@
                 btn.className = 'px-4 py-2 border-2 border-gray-200 rounded-full text-sm font-bold text-gray-600 hover:border-indigo-400 hover:text-indigo-600 transition';
 
                 btn.addEventListener('click', () => {
+                    // Toggles the inclusion state of the genre within the data set
                     if (selected.has(genre)) {
                         selected.delete(genre);
                         btn.classList.remove('bg-indigo-50', 'border-indigo-600', 'text-indigo-700');
@@ -109,8 +126,10 @@
                         btn.classList.add('bg-indigo-50', 'border-indigo-600', 'text-indigo-700');
                     }
 
+                    // Converts the Set back into a comma-separated string required by the backend API payload
                     selectedGenresInput.value = Array.from(selected).join(',');
 
+                    // Evaluates the minimum data threshold required to initialize the user's algorithmic profile
                     if (selected.size >= 3) {
                         submitBtn.disabled = false;
                         submitBtn.classList.remove('bg-indigo-300', 'cursor-not-allowed');
@@ -124,6 +143,7 @@
                 genreContainer.appendChild(btn);
             });
 
+            // Validates initial identity parameters before progressing the user to the secondary configuration view
             nextBtn.addEventListener('click', () => {
                 const username = document.getElementById('username').value;
                 const email = document.getElementById('email').value;
@@ -136,8 +156,8 @@
                 }
 
                 errorMsg.classList.add('hidden');
-                step1.classList.add('hidden');
-                step2.classList.remove('hidden');
+                step1.classList.add('hidden'); // Retracts the identity form
+                step2.classList.remove('hidden'); // Exposes the AI training form
             });
 
             backBtn.addEventListener('click', () => {
@@ -145,6 +165,7 @@
                 step1.classList.remove('hidden');
             });
 
+            // Formats and transmits the finalized data package to the backend server
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
@@ -165,7 +186,7 @@
                     const result = await response.json();
 
                     if (result.success) {
-                        window.location.href = '/login?registered=true';
+                        window.location.href = '/login?registered=true'; // Routes the user to authentication while passing a success query parameter
                     } else {
                         errorMsg.textContent = result.message;
                         errorMsg.classList.remove('hidden');
