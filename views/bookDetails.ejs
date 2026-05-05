@@ -92,8 +92,7 @@
                 
                 <div class="flex flex-wrap items-center gap-3 mb-8">
                     <span class="bg-yellow-100 text-yellow-800 text-sm font-bold px-3 py-1 rounded-full flex items-center">⭐ <%= book.averageRating %> (<%= book.ratingsCount %> ratings)</span>
-                    <span class="bg-indigo-50 text-indigo-700 text-sm font-bold px-3 py-1 rounded-full"><%= book.categories.join('
-                            , ') %></span>
+                    <span class="bg-indigo-50 text-indigo-700 text-sm font-bold px-3 py-1 rounded-full"><%= book.categories.join(', ') %></span>
                     <span class="bg-gray-100 text-gray-600 text-sm font-bold px-3 py-1 rounded-full"><%= book.pageCount %> pages</span>
                 </div>
                 
@@ -142,7 +141,7 @@
             </div>
         </div>
 
-        <%- include(' partials/footer') %> <!-- Injects global structural footer -->
+        <%- include('partials/footer') %> <!-- Injects global structural footer -->
         </main>
 
         <%- include('partials/mobileNav', { activePage: typeof activePage !=='undefined' ? activePage : '' }) %>
