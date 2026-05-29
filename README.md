@@ -96,7 +96,7 @@ JWT_SECRET=my_super_secret_btech_project_key_2026
 
 GOOGLE_BOOKS_API_KEY=.................
 
-ADMIN_EMAIL=varshneyprm@gmail.com
+ADMIN_EMAIL=.................
 
 ADMIN_PASSWORD=.........
 
@@ -123,7 +123,3 @@ nodemon server.js
 ### Step 5: Access the Application
 
 Once the terminal displays Server running on http://localhost:3000 and Connected to MongoDB, open your web browser and navigate to http://localhost:3000.
-
-Academic Institution: Aligarh College of Engineering and Technology, Aligarh
-
-Session: 2022-2026
