@@ -1,125 +1,58 @@
-# GranthSync: AI Book Recommendation System
+# The Royals Restaurant Management System
 
-## Project Overview
+A comprehensive, full-stack restaurant management application designed to streamline operations for "The Royals." This system features role-based access, including a customer-facing menu and booking system, a live Kitchen Display System (KDS) for chefs, and a management dashboard for administrators.
 
-The AI Book Recommendation System (GranthSync) is an intelligent, full-stack web application designed to streamline book discovery and tackle information overload. By moving away from static databases, the system dynamically fetches real-time metadata (titles, authors, cover art, synopses) using the Google Books API.
-
-The platform features an AI-driven recommendation engine that learns from user behaviors—such as views, ratings, and wishlist additions—to curate highly personalized reading lists. Built with a robust Node.js/Express backend and a fast, server-side rendered EJS frontend, the system guarantees a secure, seamless, and responsive user experience.
+---
 
 ## Key Features
 
-AI "Cold-Start" Initialization: Requires users to select at least 3 preferred genres during registration to instantly generate a tailored recommendation profile.
+*   **Customer Portal:** Interactive dynamic menu with "Add to Cart" functionality and an online table reservation system.
+*   **Chef Dashboard (KDS):** Real-time order queue with status toggles (Received, Preparing, Ready) for a fast-paced kitchen environment.
+*   **Admin Dashboard:** Secure portal for managing menu items (CRUD operations) and reviewing incoming table reservations.
+*   **Secure Authentication:** Environment variable-based authentication protecting the staff and admin portals from unauthorized access.
 
-Real-Time Cataloging: Seamlessly proxies search queries to the Google Books API, caching results into MongoDB to prevent duplicate API calls.
+---
 
-Personalized Libraries: Users can curate personal collections including a Wishlist, Currently Reading, and Reading History.
+## Tech Stack
 
-Behavioral Tracking Engine: Assigns algorithmic weights to user interactions to continuously refine AI recommendations.
+| Area | Technology |
+| ------ | ------ |
+| **Frontend** | EJS (Embedded JavaScript Templating), Tailwind CSS, Vanilla JavaScript |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB, Mongoose |
 
-Enterprise-Grade Security: Employs JSON Web Tokens (JWT) stored securely within HTTP-only cookies, mitigating client-side vulnerabilities.
+---
 
-## Technology Stack
+## Project Structure
 
-Frontend View Engine: EJS (Embedded JavaScript), HTML5, CSS3, Vanilla JS
+The application follows a standard modular architecture. Based on the repository contents, here are the key directories and files:
 
-Backend Framework: Node.js, Express.js
+*   **.gitignore**: Specifies intentionally untracked files to ignore, such as environment variables and node modules.
+*   **package.json** & **package-lock.json**: Contains project dependencies, scripts, and configuration details.
+*   **models/MenuItem.js**: Mongoose schema for storing and retrieving menu items.
+*   **models/Order.js**: Mongoose schema for processing and tracking customer orders.
+*   **models/Reservation.js**: Mongoose schema for the table booking system.
+*   **public/images/**: Contains static visual assets used across the site.
+*   **public/images/T_BoondiRaita.jpg**: Example menu item image stored in the public directory.
+*   **public/images/b_MangoShake.jpg**: Example beverage image stored in the public directory.
 
-Database & ODM: MongoDB, Mongoose
+---
 
-Authentication: JWT (JSON Web Tokens), bcrypt (password hashing)
+## Installation and Setup
 
-External Integrations: Google Books API, axios
+Follow these steps to run the project locally on your machine.
 
-## Prerequisites & Installation Requirements
+1.  **Clone the repository:** 
+    `git clone https://github.com/varshneyprm/The-Royals-Restaurant-Management-System.git`
+2.  **Navigate to the project directory:** 
+    `cd The-Royals-Restaurant-Management-System`
+3.  **Install dependencies:** 
+    `npm install`
+4.  **Configure Environment Variables:** 
+    Create a `.env` file in the root directory. Add your `MONGO_URI`, `ADMIN_USER`, `ADMIN_PASS`, `CHEF_USER`, and `CHEF_PASS` credentials.
+5.  **Seed the Database (Optional):** 
+    Run the seed script to populate the database with the initial menu items using `node seed.js`.
+6.  **Start the server:** 
+    `npm run dev`
 
-Before running the project locally, ensure you have the following software installed and configured on your machine:
-
-### 1. Node.js & npm
-
-Node.js is the runtime environment required to execute the backend server.
-
-Download: Node.js Official Website
-
-Version Requirement: v18.x or higher.
-
-Verification: Open your terminal and run node -v and npm -v to ensure successful installation.
-
-### 2. MongoDB
-
-A NoSQL database used to store user credentials, cached book data, and interaction logs.
-
-Local Setup: Download and install MongoDB Community Server.
-
-Cloud Alternative: Set up a free cluster on MongoDB Atlas.
-
-Tooling: It is highly recommended to install MongoDB Compass to visualize and manage your local or cloud database collections easily.
-
-### 3. Code Editor
-
-An Integrated Development Environment (IDE) is required for code inspection and configuration.
-
-Recommended: Visual Studio Code (VS Code).
-
-### 4. Web Browser & Internet Availability
-
-Browser: Any modern, standards-compliant web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).
-
-### Network Requirement
-
-An active broadband internet connection is strictly required for the application to function. The core discovery features rely on fetching real-time data from the Google Books API.
-
-## Local Environment Setup
-
-Follow these steps to configure and run the application on your local machine:
-
-### Step 1: Clone the Repository
-
-Open your terminal/command prompt and clone the project directory:
-
-git clone : https://github.com/varshneyprm/AI-Book-Recommendation-Website
-
-cd ai-book-recommendation-website
-
-### Step 2: Install Dependencies
-
-Install all required Node.js packages (Express, Mongoose, Axios, etc.) by running:
-
-npm install
-
-### Step 3: Configure Environment Variables
-
-PORT=3000
-
-MONGODB_URI=......
-
-JWT_SECRET=my_super_secret_btech_project_key_2026
-
-GOOGLE_BOOKS_API_KEY=.................
-
-ADMIN_EMAIL=.................
-
-ADMIN_PASSWORD=.........
-
-### Step 4: Start the Server
-
-You can run the application in two ways:
-
-#### Option A: Standard Execution (Production Mode)
-
-Starts the Node.js server normally. If you make changes to the code, you must manually restart the server.
-
-node server.js
-
-#### Option B: Development Execution (Hot-Reloading)
-
-Uses nodemon to monitor your project directory and automatically restart the server whenever code changes are saved.
-If you don't have nodemon installed globally, install it first:
-
-npm install -g nodemon
-Run the server:
-
-nodemon server.js
-
-### Step 5: Access the Application
-
-Once the terminal displays Server running on http://localhost:3000 and Connected to MongoDB, open your web browser and navigate to http://localhost:3000.
+**Note:** Once the server is running, the application will be accessible at `http://localhost:3000`.
